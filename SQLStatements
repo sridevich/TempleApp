@@ -1,0 +1,54 @@
+#temples Table:
+
+INSERT INTO temples(temple_id, t_name, address, city, state, zipcode)
+VALUES('SMT', 'Shiva Murugan Temple', '1803 Second St', 'Concord', 'CA', '94519');
+
+INSERT INTO temples(temple_id, t_name, address, city, state, zipcode)
+VALUES('LSVT', 'Livermore Shiva-Vishnu Temple', '1232 Arrowhead Ave', 'Livermore', 'CA', '94551');
+
+#users table:
+
+INSERT INTO users(email, pass_word, first_name, last_name, age)
+VALUES('jm@gmail.com', 'unknown7', 'John', 'Miller', 35);
+
+INSERT INTO users(email, pass_word, first_name, last_name, age)
+VALUES('katieb@gmail.com', 'unknown8', 'Katie', 'Bayer', 25);
+
+
+#ratings table:
+
+INSERT INTO ratings(user_id, temple_id, score, comments)
+VALUES(1, 'SMT', 5, 'We had a great experience!');
+
+INSERT INTO ratings(user_id, temple_id, score, comments)
+VALUES(2, 'LSVT', 5, 'We had a great experience!');
+
+phones table:
+
+INSERT INTO phones(phone_no_1, temple_id)
+VALUES ('925-827-0127', 'SMT');
+
+INSERT INTO phones(phone_no_1, temple_id)
+VALUES ('925-449-6254', 'LSVT');
+
+savesearches table:
+
+INSERT INTO savesearches(temple_id, user_id)
+VALUES ('SMT', 1);
+
+INSERT INTO savesearches(temple_id, user_id)
+VALUES('LSVT', 2);
+
+#Queries:
+
+test1 = User.query.get(1)
+
+temple_info = db.session.query(Temple.t_name, Temple.address, User.first_name,
+                                User.last_name).join(User).filter(Temple.temple_id = 'SMT').all
+
+users = User.query.all()
+    
+    for user in users:
+    	print user.email
+
+
