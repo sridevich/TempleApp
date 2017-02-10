@@ -52,3 +52,31 @@ users = User.query.all()
     	print user.email
 
 
+inputtemple = Temple(temple_id='SMT', t_name='Shiva Murugan Temple', address='1803 Second St', city='Concord', state='CA', zipcode='94519')
+db.session.add(inputtemple)
+db.session.commit()
+
+inputuser = User(email='jm@gmail.com', pass_word='unknown', first_name='John', last_name='Miller', 
+address='32 Lincoln Ave', city='San Francisco', state='CA')
+
+
+inputratings = Rating(user_id=1, temple_id='SMT', score=5, comments='Had great time and service was excellent')
+
+
+inputphone = Phone(phone_no_1='925-827-0127', temple_id='SMT')
+
+inputsearches = Savesearch(temple_id='SMT', user_id=1)
+
+
+DATA model SQLAlchemy Testing:
+
+test1 = Temple.query.get('SMT')
+test1.ratings
+
+test2 = User.query.get(1)
+test2
+test2.ratings
+
+test3 = Phone.query.get(1)
+test3
+test3.

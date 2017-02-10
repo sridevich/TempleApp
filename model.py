@@ -19,21 +19,24 @@ class User(db.Model):
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    email = db.Column(db.String(60), nullable=False)
-    pass_word = db.Column(db.String(60), nullable=False)
-    first_name = db.Column(db.String(60), nullable=True)
-    last_name = db.Column(db.String(60), nullable=True)
-    age = db.Column(db.Integer, nullable=True)
+    email = db.Column(db.String(120), nullable=False)
+    pass_word = db.Column(db.String(80), nullable=False)
+    first_name = db.Column(db.String(80), nullable=True)
+    last_name = db.Column(db.String(80), nullable=True)
+    address=db.Column(db.String(100), nullable=True)
+    city=db.Column(db.String(50), nullable=True)
+    state=db.Column(db.String(40), nullable=True)
 
     
     def __repr__(self):
         """Provide helpful representation when printed."""
 
         return ("<(User user_id=%s email=%s pass_word=%s>"
-                "<first_name=%s last_name=%s age=%s)>") % (self.user_id, 
+                "<first_name=%s last_name=%s address=%s>"
+                "<city=%s state=%s>") % (self.user_id, 
                                         self.email, self.pass_word, 
                                         self.first_name, self.last_name, 
-                                        self.age)
+                                        self.address, self.city, self.state)
 
 class Temple(db.Model):
     """ Class object for the Temple table"""
@@ -42,14 +45,14 @@ class Temple(db.Model):
     __tablename__ = "temples"
 
     temple_id = db.Column(db.String(5), primary_key=True)
-    t_name = db.Column(db.String(60), nullable=False)
-    address = db.Column(db.String(50), nullable=False)
-    city = db.Column(db.String(40), nullable=False)
-    state = db.Column(db.String(30), nullable=False)
+    t_name = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(100), nullable=False)
+    city = db.Column(db.String(50), nullable=False)
+    state = db.Column(db.String(50), nullable=False)
     zipcode = db.Column(db.String(15),nullable=False)
     email=db.Column(db.String(60), nullable=True)
-    longitude=db.Column(db.Integer, nullable=True)
-    latitude=db.Column(db.Integer, nullable=True)
+    longitude=db.Column(db.Float, nullable=True)
+    latitude=db.Column(db.Float, nullable=True)
 
 
     def _repr__(self):
@@ -68,7 +71,7 @@ class Rating(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     temple_id = db.Column(db.String(5), db.ForeignKey('temples.temple_id'))
     score = db.Column(db.Integer)
-    comments = db.Column(db.String(300), nullable=True)
+    comments = db.Column(db.Text, nullable=True)
 
     
     user = db.relationship("User",
@@ -95,11 +98,12 @@ class Phone(db.Model):
     temple_id = db.Column(db.String(5), db.ForeignKey('temples.temple_id'))
 
     temple = db.relationship("Temple",
-                             backref=db.backref("phones")
+                             backref=db.backref("phone"))
 
     def __repr__(self):
-        return "<Phone phone_id=%s phone_no=%s temple_id=%s>" % (self.phone_id, 
-                                                                self.phone_no,
+        return "<Phone phone_id=%s phone_no_1=%s phone_no_2=%s temple_id=%s>" % (self.phone_id, 
+                                                                self.phone_no_1,
+                                                                self.phone_no_2,
                                                                 self.temple_id)
 
 class Savesearch(db.Model):
@@ -111,7 +115,7 @@ class Savesearch(db.Model):
     temple_id=db.Column(db.String(5), db.ForeignKey('temples.temple_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    user = db.relationship("User", backref=db.backref("savesearches")
+    user = db.relationship("User", backref=db.backref("savesearches"))
 
     def __repr__(self):
         return "<Savesearch temple_id=%s user_id=%s" % (self.temple_id, self.user_id)
