@@ -22,10 +22,10 @@ def index():
 	return render_template("home.html")
 
 @app.route('/register', methods=['GET'])
-def registeration_form():
+def register_form():
     """Show form for new user registration."""
 
-    return render_template("registeration.html")
+    return render_template("register.html")
 
 
 @app.route('/register', methods=['POST'])
@@ -40,16 +40,16 @@ def registeration_process():
     address = request.form["address"]
     city = request.form["city"]
     state = request.form["state"]
-    zipcode = request.form["zipcode"]
 
-    new_user = User(email=email, password=pass_word, first_name=firstnamme, last_name=lastname, 
-    				address=address, city=city, state=state, zipcode=zipcode)
+    new_user = User(email=email, pass_word=pass_word, first_name=first_name, last_name=last_name, 
+    				address=address, city=city, state=state)
 
+    #print new_user
     db.session.add(new_user)
     db.session.commit()
 
     flash("User %s added." % email)
-    return redirect("/")
+    return redirect("/login")
 
 @app.route('/login', methods=['GET'])
 def login_form():
@@ -64,22 +64,37 @@ def login_process():
 
     # Get form variables
     email = request.form["email"]
-    password = request.form["password"]
+    pass_word = request.form["pass_word"]
 
     user = User.query.filter_by(email=email).first()
 
     if not user:
-        flash("No such user")
-        return redirect("/login")
+        flash("No such user.  Please register!")
+        return redirect("/register")
 
-    if user.password != password:
-        flash("Incorrect password")
+    if user.pass_word != pass_word:
+        flash("Incorrect Password! Please enter correct password")
         return redirect("/login")
 
     session["user_id"] = user.user_id
 
     flash("Logged in")
-    return redirect("/users/%s" % user.user_id)
+    return redirect("/")
+    #return redirect("/users/%s" % user.user_id)
+
+@app.route('/search')
+def search_form():
+    """ Show list of Temples form. """
+
+    state = request.args.get("state")
+    zipcode = request.args.get("zipcode")
+
+    searches = db.session.query(Temple.t_name, Temple.address,
+                Temple.city, Temple.state, Temple.zipcode,
+                Phone.phone_no_1).join(Phone).all()
+
+
+    return render_template("temple_list.html", searches=searches)
 
 
 if __name__ == "__main__":
@@ -87,11 +102,11 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
 
-    app.run()
+    app.run(host="0.0.0.0")
