@@ -79,22 +79,40 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("Logged in")
+    #return redirect("/")
+    return redirect("/users/%s" % user.user_id)
+
+@app.route("/logout")
+def logout():
+    """Log out."""
+
+    del session["user_id"]
+    flash("Logged Out!")
     return redirect("/")
-    #return redirect("/users/%s" % user.user_id)
 
 @app.route('/search')
-def search_form():
+def temple_search_form():
     """ Show list of Temples form. """
 
     state = request.args.get("state")
     zipcode = request.args.get("zipcode")
 
-    searches = db.session.query(Temple.t_name, Temple.address,
-                Temple.city, Temple.state, Temple.zipcode,
-                Phone.phone_no_1).join(Phone).all()
 
+    temples = Temple.query.filter_by(state=state, zipcode=zipcode).all()
+    print temples
 
-    return render_template("temple_list.html", searches=searches)
+    # temples = db.session.query(Temple.t_name, Temple.address,
+    #             Temple.city, Temple.state, Temple.zipcode,
+    #             Phone.phone_no_1).join(Phone).filter(Temple.state==state, Temple.zipcode==zipcode).all()
+
+    return render_template("temple_list.html", temples=temples)
+
+@app.route("/users/<int:user_id>")
+def user_profile(user_id):
+    """Show user information."""
+
+    user = User.query.get(user_id)
+    return render_template("user.html", user=user)
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ class User(db.Model):
     state=db.Column(db.String(40), nullable=True)
     #zipcode=db.Column(db.String(40), nullable=True)
     #phone.db.Column(db.String), nullable=True)
+    #age.db.Column(db.Integer), nullable=True)
 
     
     def __repr__(self):
