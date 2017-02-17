@@ -82,3 +82,30 @@ test3
 test3
 
 ### <link rel="stylesheet" type="test/css" hred="{{ url_for('static', filename='style.css')}}">
+
+	<p><a href="/login">Login</a></p>
+
+
+<!-- <br>
+<div>
+    <h2>Temples</h2>
+    <ul>
+      {% for temple in temples %}
+          <li>
+              <a href="/search/">
+              	{{temple.temple_id}}
+                {{ temple.t_name }}
+                {{ temple.address }} 
+                {{ temple.city }}
+                {{ temple.state}}
+                {{ temple.zipcode}}
+                {% for phone in temple.phone %}
+                    {{ phone.phone_no_1 }}
+                {% endfor %}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+</div>
+<br>    
+ -->

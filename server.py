@@ -99,7 +99,7 @@ def temple_search_form():
 
 
     temples = Temple.query.filter_by(state=state, zipcode=zipcode).all()
-    print temples
+    #print temples
 
     # temples = db.session.query(Temple.t_name, Temple.address,
     #             Temple.city, Temple.state, Temple.zipcode,
@@ -113,6 +113,95 @@ def user_profile(user_id):
 
     user = User.query.get(user_id)
     return render_template("user.html", user=user)
+
+@app.route("/temple/<temple_id>")
+def temple_profile(temple_id):
+
+    temple = Temple.query.get(temple_id)
+    return render_template("temple.html", temple=temple)
+
+@app.route("/savetemple", methods=["POST"])
+def savetemple():
+    """ saves user search """
+    savetemple = request.form.get("templeid")
+
+    user = session.get("user_id")
+
+    db.session.add(Savesearch(temple_id=savetemple, user_id=user))
+
+    db.session.commit()
+
+    return redirect("/")
+
+@app.route("/ratings/<int:rating_id>")
+    """Show rationgs."""
+
+    rating = Rating.query.get(rating_id)
+    return render_template("temple.html", rating=rating)
+
+
+@app.route("/saveratings/int:<rating_id>")
+def saveratings():
+    """ saves user ratings """
+
+    
+
+
+
+
+
+
+
+
+
+# @app.route("/templeratings/<int:temple_id>", methods=['Get'])
+# def rate_temple(temple_id):
+#     """Show info about temple.
+
+#     If a user is logged in, let them add/edit a rating.
+#     """
+
+#     temple = Temple.query.get(movie_id)
+
+#     user_id = session.get("user_id")
+
+#     if user_id:
+#         user_rating = Rating.query.filter_by(
+#             temple_id=temple_id, user_id=user_id).first()
+
+#     else:
+#         user_rating = None
+
+
+# @app.route("/templeratings/<int:temple_id>", methods=['POST'])
+# def rate_temple_process(temple_id):
+#     """Add/edit a rating."""
+
+#     # Get form variables
+#     score = int(request.form["score"])
+
+#     user_id = session.get("user_id")
+#     if not user_id:
+#         raise Exception("No user logged in.")
+
+#     rating = Rating.query.filter_by(user_id=user_id, temple_id=temple_id).first()
+
+#     if rating:
+#         rating.score = score
+#         rating.comments = comments
+#         flash("Rating updated.")
+
+#     else:
+#         rating = Rating(user_id=user_id, temple_id=temple_id, score=score)
+#         flash("Rating added.")
+#         db.session.add(rating)
+
+#     db.session.commit()
+
+#     return redirect("/")
+
+
+
 
 
 if __name__ == "__main__":
