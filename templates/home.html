@@ -1,24 +1,26 @@
-{% extends 'base.html' %}
-{% block content %}
-
-	<h1> Indian Temples in US</h1>
-	<form action="/search" >
-		<div>
-			<label>State
-				<input type="text" name="state" required>
-			</label>
-		</div>
-		<br>
-		<div>
-			<lable>Zipcode
-				<input type="text" name="zipcode" required>
-			</lable>
-		</div>
-		<br>
-		<div>
-            <input type="submit" value="Search">
-        </div>
+<!DOCTYPE html>
+<html>
+<head> 
+	<title> Temples </title>	
+</head>
+<body>
+	<h1> Search Temples in US </h1>	
+	<form action="/search">
+	<lable for="SearchBar"></lable>
+	<select name="state", placeholder="State">
+      	<option value="AK">AK</option>
+      	<option value="AZ">AZ</option>
+      	<option value="CA">CA</option>
+      	<option value="CO">CO</option>
+      	<option value="HI">HI</option>
+      	<option value="ID">ID</option>
+      	<option value="NV">NV</option>
+      	<option value="NM">NM</option>
+      	<option value="OR">OR</option>
+      	<option value="UT">UT</option>
+            <option value="WA">WA</option>            
+      </select><input type="text" name="zipcode" id="searchBar" placeholder="Zipcode" value="" maxlength="20" autocompete="off" onMouseDown="" onBlur=""/><input type="submit" id="searchBtn" value="GO!"/>
 	</form>
+</body>
+</html>
 
-
-{% endblock %}

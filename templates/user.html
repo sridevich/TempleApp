@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+		<h3>User:</h3>
+  		<h3>(Email:{{ user.email }})</h3>
+  		<p style="color:blue">First Name: {{ user.first_name }} </p>
+  		<p style="color:blue">Last Name: {{ user.last_name}}</p>	
+  		<p style="color:blue"> Address: {{ user.address }} </p>	 
+  		<p style="color:blue"> City: {{user.city}} </p> 
+  		<p style="color:blue"> State: {{user.state}} </p> 		
+</div>
+
+<h3> Saved Temple </h3>
+
+{% for search in user.savesearches %}
+	<p> You have saved these following temples:{{search.temple_id }} </P>
+{% endfor %}
+
+<h3> Saved Ratings </h3>
+
+ {% if user.ratings %}
+    <h2>Ratings</h2>
+    {% for rating in user.ratings %}
+        <p> You have rated Temple Id, {{ rating.temple_id }} Score of {{ rating.score }}!</p>
+        <p>	And your Comments: {{ rating.comments }} </p>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}

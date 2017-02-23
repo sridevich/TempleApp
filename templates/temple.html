@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>{{temple.t_name}}</h2>
+<p>{{temple.address}}</p>
+<p>{{temple.city}}</p>
+<p>{{temple.state}} {{temple.zipcode}}</p>
+<div>
+Save Temple:
+<form action="/savetemple" method="POST">
+  <input type="text" name="templeid" Value="{{temple.temple_id}}"> 
+  <input type="submit" Value="Save Temple">
+</form>
+</div>
+
+<form action="/saveratings", method="POST">
+  Save Ratings:
+  <div>
+    <input type="text" name="templeid" Value="{{temple.temple_id}}" hidden> 
+  </div>
+    <div>
+    <select name="score">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  <div>
+      <textarea name="comments"></textarea>
+  </div>
+
+    <input type="submit" value="Save Ratings">
+</form>
+
+{% endblock %}

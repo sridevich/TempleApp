@@ -40,16 +40,19 @@ def registeration_process():
     address = request.form["address"]
     city = request.form["city"]
     state = request.form["state"]
+    zipcode = request.form["zipcode"]
+    phone = request.form["phone"]
+    age = request.form["age"]
 
     new_user = User(email=email, pass_word=pass_word, first_name=first_name, last_name=last_name, 
-    				address=address, city=city, state=state)
+    				address=address, city=city, state=state, zipcode=zipcode, phone=phone, age=age)
 
     #print new_user
     db.session.add(new_user)
     db.session.commit()
 
     flash("User %s added." % email)
-    return redirect("/login")
+    return redirect("/temple_list.html")
 
 @app.route('/login', methods=['GET'])
 def login_form():
@@ -95,16 +98,17 @@ def temple_search_form():
     """ Show list of Temples form. """
 
     state = request.args.get("state")
+    print state
     zipcode = request.args.get("zipcode")
-
-
+    print zipcode
     temples = Temple.query.filter_by(state=state, zipcode=zipcode).all()
-    #print temples
+    print temples
 
-    # temples = db.session.query(Temple.t_name, Temple.address,
-    #             Temple.city, Temple.state, Temple.zipcode,
-    #             Phone.phone_no_1).join(Phone).filter(Temple.state==state, Temple.zipcode==zipcode).all()
+    # # temples = db.session.query(Temple.t_name, Temple.address,
+    # #             Temple.city, Temple.state, Temple.zipcode,
+    # #             Phone.phone_no_1).join(Phone).filter(Temple.state==state, Temple.zipcode==zipcode).all()
 
+    
     return render_template("temple_list.html", temples=temples)
 
 @app.route("/users/<int:user_id>")
@@ -133,75 +137,33 @@ def savetemple():
 
     return redirect("/")
 
-@app.route("/ratings/<int:rating_id>")
-    """Show rationgs."""
-
-    rating = Rating.query.get(rating_id)
-    return render_template("temple.html", rating=rating)
-
-
-@app.route("/saveratings/int:<rating_id>")
+@app.route("/saveratings", methods=["POST"])
 def saveratings():
-    """ saves user ratings """
+    """saves user ratings """
+    # Get form variables
 
+    temple_id=request.form.get("templeid")
+    score = int(request.form.get("score"))
+    user = session.get("user_id")
+    comments = request.form.get("comments")
+    
+    rating = Rating.query.filter_by(user_id=user, temple_id=temple_id).first()
+
+    if rating:
+        rating.score = score
+        rating.comments = comments
+        flash("Rating updated.")
+
+    else:
+        
+        db.session.add(Rating(temple_id=temple_id, score=score, user_id=user, comments=comments))
+        flash("Rating added!")
+
+    db.session.commit()
     
 
-
-
-
-
-
-
-
-
-# @app.route("/templeratings/<int:temple_id>", methods=['Get'])
-# def rate_temple(temple_id):
-#     """Show info about temple.
-
-#     If a user is logged in, let them add/edit a rating.
-#     """
-
-#     temple = Temple.query.get(movie_id)
-
-#     user_id = session.get("user_id")
-
-#     if user_id:
-#         user_rating = Rating.query.filter_by(
-#             temple_id=temple_id, user_id=user_id).first()
-
-#     else:
-#         user_rating = None
-
-
-# @app.route("/templeratings/<int:temple_id>", methods=['POST'])
-# def rate_temple_process(temple_id):
-#     """Add/edit a rating."""
-
-#     # Get form variables
-#     score = int(request.form["score"])
-
-#     user_id = session.get("user_id")
-#     if not user_id:
-#         raise Exception("No user logged in.")
-
-#     rating = Rating.query.filter_by(user_id=user_id, temple_id=temple_id).first()
-
-#     if rating:
-#         rating.score = score
-#         rating.comments = comments
-#         flash("Rating updated.")
-
-#     else:
-#         rating = Rating(user_id=user_id, temple_id=temple_id, score=score)
-#         flash("Rating added.")
-#         db.session.add(rating)
-
-#     db.session.commit()
-
-#     return redirect("/")
-
-
-
+    return redirect("/")
+    #return redirect("/search/%s" % movie_id)
 
 
 if __name__ == "__main__":
@@ -209,7 +171,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 

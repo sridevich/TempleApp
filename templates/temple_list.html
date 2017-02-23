@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head> 
+  <title> Search Temples in US </title>
+  <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #templemap {
+        height: 500px;
+        width: 500px;
+        background-color:grey;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+<body>
+<div>
+    <h2>Temples</h2>
+    <div id="temples" data-temples="{{temples}}">     
+    </div>
+    <ul>
+      {% for temple in temples %}
+          <li>
+              <a href="/temple/{{temple.temple_id}}">   
+                {{ temple.t_name }}
+                {{ temple.address }} 
+                {{ temple.city }}
+                {{ temple.state}}
+                {{ temple.zipcode}}
+                {% for phone in temple.phone %}
+                    {{ phone.phone_no_1 }}
+                {% endfor %}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+  console.log("hello")
+</script>
+
+<div id="templemap"></div>
+<script>
+  var map;
+  var temples = $("#temples").attr("data-temples")
+  
+  console.log(temples)
+  
+  for (var temple in temples) {
+    if (temples.hasOwnProperty(temple)) {
+      console.log(temples[temple])
+    }
+
+  }
+
+
+  function showtemplemap() {
+    
+    for (var temple of "{{temples}}") {
+      
+      var longitude = temple.longitude
+      console.log(longitude)
+      var latitude = temple.latitude
+      console.log(latitude)
+
+      var pos = {lat: latitude, lng: longitude};
+      
+      map = new google.maps.Map(document.getElementById('templemap'), {
+      center: pos,
+      zoom: 8
+      });
+
+      var markers = new google.maps.Marker ({
+      position: pos,
+      map: map
+        
+    });
+  }
+
+  }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo&callback=showtemplemap" async defer></script>
+</body>
+</html>
+

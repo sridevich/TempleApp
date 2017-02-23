@@ -26,9 +26,9 @@ class User(db.Model):
     address=db.Column(db.String(100), nullable=True)
     city=db.Column(db.String(50), nullable=True)
     state=db.Column(db.String(40), nullable=True)
-    #zipcode=db.Column(db.String(40), nullable=True)
-    #phone.db.Column(db.String), nullable=True)
-    #age.db.Column(db.Integer), nullable=True)
+    zipcode=db.Column(db.String(40), nullable=True)
+    phone=db.Column(db.String(40), nullable=True)
+    age=db.Column(db.Integer, nullable=True)
 
     
     def __repr__(self):
@@ -52,7 +52,7 @@ class Temple(db.Model):
     address = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(50), nullable=False)
-    zipcode = db.Column(db.String(15),nullable=False)
+    zipcode = db.Column(db.String(40),nullable=False)
     email=db.Column(db.String(60), nullable=True)
     longitude=db.Column(db.Float, nullable=True)
     latitude=db.Column(db.Float, nullable=True)
@@ -73,7 +73,7 @@ class Rating(db.Model):
     rating_id = db.Column(db.Integer, primary_key=True, autoincrement=True )
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     temple_id = db.Column(db.String(5), db.ForeignKey('temples.temple_id'))
-    score = db.Column(db.Integer)
+    score = db.Column(db.Integer, nullable=True)
     comments = db.Column(db.Text, nullable=True)
 
     
@@ -96,8 +96,8 @@ class Phone(db.Model):
     __tablename__ = "phones"
 
     phone_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    phone_no_1 = db.Column(db.String)
-    phone_no_2 =db.Column(db.String)
+    phone_no_1 = db.Column(db.String(40))
+    phone_no_2 =db.Column(db.String(40))
     temple_id = db.Column(db.String(5), db.ForeignKey('temples.temple_id'))
 
     temple = db.relationship("Temple",
