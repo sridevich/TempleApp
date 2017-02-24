@@ -6,8 +6,8 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #templemap {
-        height: 500px;
-        width: 500px;
+        height: 600px;
+        width: 600px;
         background-color:grey;
       }
 
@@ -16,13 +16,13 @@
         margin: 0;
         padding: 0;
       }
+
     </style>
 </head>
 <body>
 <div>
     <h2>Temples</h2>
-    <div id="temples" data-temples="{{temples}}">     
-    </div>
+    
     <ul>
       {% for temple in temples %}
           <li>
@@ -39,55 +39,52 @@
           </li>
       {% endfor %}
     </ul>
-</div>
+
+<div id="templemap"> </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>
-  console.log("hello")
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo" async defer></script>
 
 <div id="templemap"></div>
-<script>
-  var map;
-  var temples = $("#temples").attr("data-temples")
-  
-  console.log(temples)
-  
-  for (var temple in temples) {
-    if (temples.hasOwnProperty(temple)) {
-      console.log(temples[temple])
-    }
-
-  }
+<script type="text/javascript"> 
 
 
-  function showtemplemap() {
+$( document ).ready(function()  {
+
+    {% for temple in temples %}      
+      var zipcodelat = parseFloat("{{temple.latitude}}");
+      console.log(zipcodelat)
+      var zipcodelong = parseFloat("{{temple.longitude}}");
+      console.log(zipcodelong)
+      var pos = {lat: zipcodelat, lng: zipcodelong};
+      console.log(pos)
+
+    {% endfor %}
+
+      var map = new google.maps.Map(document.getElementById('templemap'), {
+        center: pos,
+        zoom: 8
+        });
+
+       {% for temple in temples %}
     
-    for (var temple of "{{temples}}") {
-      
-      var longitude = temple.longitude
-      console.log(longitude)
-      var latitude = temple.latitude
-      console.log(latitude)
+        var lat = parseFloat("{{temple.latitude}}");
+        console.log(lat)
 
-      var pos = {lat: latitude, lng: longitude};
-      
-      map = new google.maps.Map(document.getElementById('templemap'), {
-      center: pos,
-      zoom: 8
-      });
+        var longt = parseFloat("{{temple.longitude}}");
+        console.log(longt)
+        var pos = {lat: lat, lng:longt}
 
-      var markers = new google.maps.Marker ({
-      position: pos,
-      map: map
-        
-    });
-  }
+        var markers = new google.maps.Marker ({
+        position: pos,
+        map: map
+        });
 
-  }
+    {% endfor %} 
+    
+  });
 
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo&callback=showtemplemap" async defer></script>
+
 </body>
 </html>
-
