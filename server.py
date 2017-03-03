@@ -84,6 +84,8 @@ def login_process():
     flash("Logged in")
     #return redirect("/")
     return redirect("/users/%s" % user.user_id)
+    #return redirect("/search")
+
 
 @app.route("/logout")
 def logout():
@@ -92,6 +94,7 @@ def logout():
     del session["user_id"]
     flash("Logged Out!")
     return redirect("/")
+
 
 @app.route('/search')
 def temple_search_form():
@@ -108,21 +111,27 @@ def temple_search_form():
     # #             Temple.city, Temple.state, Temple.zipcode,
     # #             Phone.phone_no_1).join(Phone).filter(Temple.state==state, Temple.zipcode==zipcode).all()
 
-    
     return render_template("temple_list.html", temples=temples)
+
+    
 
 @app.route("/users/<int:user_id>")
 def user_profile(user_id):
     """Show user information."""
 
     user = User.query.get(user_id)
-    return render_template("user.html", user=user)
+    return render_template("user.html", user=user, temple_id=session["temple_id"])
 
 @app.route("/temple/<temple_id>")
 def temple_profile(temple_id):
 
     temple = Temple.query.get(temple_id)
-    return render_template("temple.html", temple=temple)
+    #import pdb; pdb.set_trace()
+    user = session.get("user_id")
+
+    session["temple_id"] = temple_id
+    return render_template("temple.html", temple=temple, user_id=user, temple_id=session["temple_id"])
+    
 
 @app.route("/savetemple", methods=["POST"])
 def savetemple():
@@ -131,11 +140,17 @@ def savetemple():
 
     user = session.get("user_id")
 
-    db.session.add(Savesearch(temple_id=savetemple, user_id=user))
+    if not user:
 
-    db.session.commit()
+        db.session.add(Savesearch(temple_id=savetemple, user_id=user))
+        db.session.commit()
+        flash("Saved your temple")
+    else:
 
-    return redirect("/")
+        flash("Already exists in the database")
+
+
+    return redirect("/temple/" + savetemple)
 
 @app.route("/saveratings", methods=["POST"])
 def saveratings():
@@ -148,6 +163,8 @@ def saveratings():
     comments = request.form.get("comments")
     
     rating = Rating.query.filter_by(user_id=user, temple_id=temple_id).first()
+
+
 
     if rating:
         rating.score = score
@@ -162,7 +179,7 @@ def saveratings():
     db.session.commit()
     
 
-    return redirect("/")
+    return redirect("/temple/" + temple_id)
     #return redirect("/search/%s" % movie_id)
 
 
@@ -171,7 +188,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 

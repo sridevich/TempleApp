@@ -15,19 +15,31 @@
         padding: 0;ty
       }
 </style>
-<h2>{{temple.t_name}}</h2>
-<p>{{temple.address}}</p>
-<p>{{temple.city}}</p>
-<p>{{temple.state}} {{temple.zipcode}}</p>
+
+{% if user_id %}
+<a href="/users/{{user_id}}">User Profile </a>
+{% endif %}
+
 <div>
-Save Temple:
-<form action="/savetemple" method="POST">
-  <input type="text" name="templeid" Value="{{temple.temple_id}}"> 
-  <input type="submit" Value="Save Temple">
-</form>
+  <h2>{{temple.t_name}}</h2>
+  <p>{{temple.address}}</p>
+  <p>{{temple.city}}</p>
+  <p>{{temple.state}} {{temple.zipcode}}</p>
 </div>
 
-<form action="/saveratings", method="POST">
+
+{% if user_id %}
+
+Save Temple:
+  
+  <form action="/savetemple" method="POST", id="savetemple">
+    <input type="text" name="templeid" id = "templeid" Value="{{temple.temple_id}}"> 
+    <input type="submit" id = "btnsubmit" Value="submit">
+  </form>
+
+
+
+<form action="/saveratings", method="POST" id="saveratings">
   Save Ratings:
   <div>
     <input type="text" name="templeid" Value="{{temple.temple_id}}" hidden> 
@@ -47,6 +59,11 @@ Save Temple:
 
     <input type="submit" value="Save Ratings">
 </form>
+
+{% else %}
+  <h3> Please longin to see the form </h3>
+
+{% endif %}
 
 <div id="templemap"> </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -77,6 +94,13 @@ $( document ).ready(function()  {
     
   });
 
+
 </script>
 
 {% endblock %}
+
+
+
+
+
+

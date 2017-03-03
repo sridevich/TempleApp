@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head> 
 	<title> Temples </title>	
 </head>
 <body>
 	<h1> Search Temples in US </h1>	
-	<form action="/search">
+	<form action="/search" id="search">
 	<lable for="SearchBar"></lable>
-	<select name="state", placeholder="State">
+	<select name="state", required>
+            <option disabled="" selected="">State</option>
       	<option value="AK">AK</option>
       	<option value="AZ">AZ</option>
       	<option value="CA">CA</option>
@@ -19,8 +21,20 @@
       	<option value="OR">OR</option>
       	<option value="UT">UT</option>
             <option value="WA">WA</option>            
-      </select><input type="text" name="zipcode" id="searchBar" placeholder="Zipcode" value="" maxlength="20" autocompete="off" onMouseDown="" onBlur=""/><input type="submit" id="searchBtn" value="GO!"/>
+      </select><input id="zipcode" class="zipcode" type="text" name="zipcode" placeholder="Zipcode" onchange="zipcode_validate(this.form.zipcode.value)" required><input type="submit" id="searchBtn" value="GO!"/>
 	</form>
 </body>
-</html>
 
+<script type="text/javascript">
+
+ function zipcode_validate(zipcode) { 
+            var isValid = /^([0-9]){5}(([ ]|[-])?([0-9]){4})?$/.test(zipcode);      
+             if (!isValid) {
+             
+                  alert("Please enter a valid zipcode");
+                document.getElementByID("zipcode").value="";
+            }
+      }
+</script>
+
+</html>

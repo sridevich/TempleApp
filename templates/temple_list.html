@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head> 
+<head>
   <title> Search Temples in US </title>
+
   <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -20,11 +21,13 @@
     </style>
 </head>
 <body>
-<div>
+
+<div id="templelist"
     <h2>Temples</h2>
-    
-    <ul>
+
+
       {% for temple in temples %}
+
           <li>
               <a href="/temple/{{temple.temple_id}}">   
                 {{ temple.t_name }}
@@ -39,28 +42,34 @@
           </li>
       {% endfor %}
     </ul>
+</div>
+
+{% if temples %}
 
 <div id="templemap"> </div>
+{%  else  %}
+  <h3> No Temples Found </h3>
+{% endif %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo" async defer></script>
 
-<div id="templemap"></div>
 <script type="text/javascript"> 
 
 
-$( document ).ready(function()  {
+    $( document ).ready(function()  {
 
-    {% for temple in temples %}      
-      var zipcodelat = parseFloat("{{temple.latitude}}");
-      console.log(zipcodelat)
-      var zipcodelong = parseFloat("{{temple.longitude}}");
-      console.log(zipcodelong)
-      var pos = {lat: zipcodelat, lng: zipcodelong};
-      console.log(pos)
+        {% for temple in temples %}      
+          var zipcodelat = parseFloat("{{temple.latitude}}");
+          console.log(zipcodelat)
+          var zipcodelong = parseFloat("{{temple.longitude}}");
+          console.log(zipcodelong)
+          var pos = {lat: zipcodelat, lng: zipcodelong};
+          console.log(pos)
 
-    {% endfor %}
+        {% endfor %}
 
-      var map = new google.maps.Map(document.getElementById('templemap'), {
+        var map = new google.maps.Map(document.getElementById('templemap'), {
         center: pos,
         zoom: 8
         });
@@ -79,12 +88,12 @@ $( document ).ready(function()  {
         map: map
         });
 
-    {% endfor %} 
-    
-  });
-
-
+      {% endfor %}         
+  
+    });
+  
 </script>
 
 </body>
+
 </html>
