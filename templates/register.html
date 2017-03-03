@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Register</h1>
+
+<form action="register" method="POST">
+
+    <div>
+        <label>
+            Email
+            <input type="email" name="email" required placeholder="Please Enter a valid email address!">
+        </label>
+    </div>
+    <br>
+    <div>
+        <label>
+            Password
+            <input type="password" name="password">
+        </label>
+    </div>
+    <br>
+    <div>
+        <label>
+            Firstname
+            <input type="text" name="firstname">
+        </label>
+    </div>
+    <br>
+    <div>
+        <label>
+            Lastname
+            <input type="text" name="lastname">
+        </label>
+    </div>
+    <br>
+
+    <div>
+        <label>
+            Address
+            <input type="text" name="address">
+        </label>
+    </div>
+    <br>
+    <div>
+        <lable>
+            City
+            <input type = "text" name="city">
+        </label> 
+    </div>   
+    <br>
+    <div>
+        <lable>
+            State
+            <input type = "text" name="state">
+        </label> 
+    </div>   
+    <br>
+    <div>
+        <lable>
+            Zipcode
+            <input type = "text" name="zipcode">
+        </label> 
+    </div>
+    <br>  
+    <div>
+        <lable>
+            Phone
+            <input type = "text" name="phone">
+        </label> 
+    </div>
+    <br>  
+    <div>
+        <lable>
+            Age
+            <input type = "text" name="age">
+        </label> 
+    </div>  
+    <br>
+    <div>
+        <input type="submit" value="Register">
+    </div>
+
+</form>
+
+{% endblock %}
