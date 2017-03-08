@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+   
+   .ratingscomments{
+      position: relative;
+      left:3%;
+      border: solid 1px rgb(0,0,0);
+  }
+
+h4 { 
+    font-style: italic;
+    font-weight: bold;
+  }
+
+body { 
+        background-image : url("/static/images/templebackground4.jpg");
+        background-size: cover;
+      }
+
+#userprofile {
+        margin:5px;
+        line-height:51px;
+        vertical-align:right;
+      }
+
+</style>
+
+<div id="userprofile">
+    <h1>  User Profile Page </h1>
+</div>
+
 <a href="/temple/{{temple_id}}">Temple Page </a>
 
-<div>
+<div class="userinfo">
 
 		<h3>User:</h3>
   		<h3>(Email:{{ user.email }})</h3>
@@ -14,16 +44,30 @@
   		<p style="color:blue"> State: {{user.state}} </p> 		
 </div>
 
+<div id="ratingscomments">
+
 <h3> Your Ratings And Comments for the Temples: </h3>
 
  {% if user.ratings %}
 
     {% for rating in user.ratings %}
-      <h4>Temple ID: </h4> <p>{{ rating.temple_id }} </p>
+      <h4 style="color:blue">Temple: {{ rating.temple.t_name }} </h4>
       <h4>Score:</h4> <p>{{ rating.score }} </p>
       <h4>Comments:</h4> <p>{{ rating.comments }} </p>
+      <br>
     {% endfor %}
 
   {% endif %}
+
+
+ {% if user.savesearches %}
+
+    {% for save in user.savesearches %}
+      <h4>Temple ID: </h4> <p>{{ save.temple_id }} </p>
+    {% endfor %}
+
+  {% endif %}
+
+</div>
 
 {% endblock %}

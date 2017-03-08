@@ -39,28 +39,3 @@ VALUES ('SMT', 1);
 INSERT INTO savesearches(temple_id, user_id)
 VALUES('LSVT', 2);
 
-flash message:
-
-{% for flash in get_flashed_messages() %}
-  {{ flash }}
-{% endfor %}
-
-<a href="/temple/{{temple.temple_id}}">Temple Page </a>
-
-
-<h3> Your Saved Temple </h3>
-
-    {% for search in user.savesearches %}
-	   <p> {{search.temple_id }} </P>
-    {% endfor %}
-<input type="text" name="zipcode" id="searchBar" placeholder="Zipcode" value="" maxlength="20" autocompete="off" onMouseDown="" onBlur=""/><input type="submit" id="searchBtn" value="GO!"/>
-
-/\d{5}-\d{4}$|^\d{5}$/
- /(^\d{5}(-\d{4})?$/; 
-
- window.onload = function () {
-    document.getElementById('more').onload = function () {
-        if (this.checked)
-            document.getElementById('yourDiv').style.display = 'block';
-        else
-            document.getElementById('yourDiv').style.display = 'none';  

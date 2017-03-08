@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Search Temples in US </title>
+  <title>Temples</title>
 
   <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #templemap {
-        height: 600px;
-        width: 600px;
-        background-color:grey;
+        height: 300px;
+        width: 800px;
+        position: absolute; 
+        left: 3%;
+        border: solid 3px rgb(0,0,0);
+        margin-bottom: 50px;
+
       }
 
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
+        font-weight: 
+
+      }
+      body { 
+        background-image : url("/static/images/templebackground4.jpg");
+      }
+
+     h2 {
+          position: relative;
+          top:5px;
+          left: 2.5%;
+          font-weight: bold;
+          font-family: 'Raleway', sans-serif;
+          padding: 5px;
       }
 
     </style>
 </head>
 <body>
 
-<div id="templelist"
-    <h2>Temples</h2>
+  <div class="pageheading">
+    <h1>  Temple List Page </h1>
+  </div>
 
-
+<div class="templelist">
+    <h2>Please select from the list!</h2>
+    <div class="liststyle">
+    <ul style="list-style:none">
       {% for temple in temples %}
 
           <li>
@@ -37,11 +59,14 @@
                 {{ temple.zipcode}}
                 {% for phone in temple.phone %}
                     {{ phone.phone_no_1 }}
+                <br>
+                <br>
                 {% endfor %}
               </a>
           </li>
       {% endfor %}
     </ul>
+  </div>
 </div>
 
 {% if temples %}
@@ -71,7 +96,7 @@
 
         var map = new google.maps.Map(document.getElementById('templemap'), {
         center: pos,
-        zoom: 8
+        zoom: 12
         });
 
        {% for temple in temples %}

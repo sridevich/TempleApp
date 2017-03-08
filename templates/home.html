@@ -1,28 +1,51 @@
-<!DOCTYPE html>
 <html>
 
 <head> 
-	<title> Temples </title>	
+  <title> Temples </title>  
+  <link 
+     href="https://maxcdn.bootstrapcdn.com/bootstrap/
+      3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+      <link href="/static/css/styles.css" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+<style> 
+
+  body {
+    background-image: url("/static/images/angkorwat.jpg");
+    background-size: 100%;
+   }
+   
+</style>
+
 </head>
 <body>
-	<h1> Search Temples in US </h1>	
-	<form action="/search" id="search">
-	<lable for="SearchBar"></lable>
-	<select name="state", required>
-            <option disabled="" selected="">State</option>
-      	<option value="AK">AK</option>
-      	<option value="AZ">AZ</option>
-      	<option value="CA">CA</option>
-      	<option value="CO">CO</option>
-      	<option value="HI">HI</option>
-      	<option value="ID">ID</option>
-      	<option value="NV">NV</option>
-      	<option value="NM">NM</option>
-      	<option value="OR">OR</option>
-      	<option value="UT">UT</option>
-            <option value="WA">WA</option>            
-      </select><input id="zipcode" class="zipcode" type="text" name="zipcode" placeholder="Zipcode" onchange="zipcode_validate(this.form.zipcode.value)" required><input type="submit" id="searchBtn" value="GO!"/>
-	</form>
+  
+    <div class = "page-header">
+      <h1> Temple Quest</h1>
+    </div>
+
+  
+  <div class="templesearch">
+  <form action="/search" id="search">
+  <select name="state", id="states" required>
+        <option value="" selected>State</option>
+        <option value="AK">AK</option>
+        <option value="AZ">AZ</option>
+        <option value="CA">CA</option>
+        <option value="CO">CO</option>
+        <option value="HI">HI</option>
+        <option value="ID">ID</option>
+        <option value="NV">NV</option>
+        <option value="NM">NM</option>
+        <option value="OR">OR</option>
+        <option value="UT">UT</option>
+        <option value="WA">WA</option>            
+      </select><input type="text" id="zipcode" name="zipcode" align = "center" placeholder="Zipcode" onchange="zipcode_validate(this.form.zipcode.value)" required><input type="submit" class="searchBtn" value="GO!"/>
+  
+  </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 <script type="text/javascript">

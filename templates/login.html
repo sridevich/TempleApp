@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+    body { 
+        background-image : url("/static/images/templebackground4.jpg");
+      }
+
+
+    #loginpage {
+        margin:5px;
+        line-height:51px;
+        vertical-align:right;
+      }
+</style>
+
+
+<div id="loginpage">
+    <h1>  User Profile Page </h1>
+</div>
 
     <h1>Login</h1>
     <form action="/login" method="POST"/>

@@ -144,10 +144,10 @@ def savetemple():
 
         db.session.add(Savesearch(temple_id=savetemple, user_id=user))
         db.session.commit()
-        flash("Saved your temple")
+        flash("Saved temple")
     else:
 
-        flash("Already exists in the database")
+        flash("Already saved!")
 
 
     return redirect("/temple/" + savetemple)
@@ -163,8 +163,6 @@ def saveratings():
     comments = request.form.get("comments")
     
     rating = Rating.query.filter_by(user_id=user, temple_id=temple_id).first()
-
-
 
     if rating:
         rating.score = score

@@ -4,72 +4,124 @@
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #templemap {
-        height: 600px;
-        width: 600px;
-        background-color:grey;
+        height: 400px;
+        width: 500px;
+        /*position: relative;*/
+        top: 0px; 
+        /*left: 30%;*/
+        border: solid 3px rgb(0,0,0);
+        margin-bottom: 0px;
       }
 
       html, body {
         height: 100%;
         margin: 0;
-        padding: 0;ty
+        padding: 0;
       }
+
+      body { 
+        background-image : url("/static/images/templebackground4.jpg");
+      }
+      p { 
+        line-height: 0.5em;
+        margin-top: 1px;
+        position: relative;
+        left: 5%;
+      }
+      h2 { 
+        margin-bottom: 0px; 
+      }
+
+
+      #templeprofile {
+        margin:5px;
+        line-height:51px;
+        vertical-align:right;
+      }
+/*
+      .savetemple{
+        position: relative;
+        left: 0.5%;
+        border: solid 1px rgb(0,0,0);
+        border-right-width: 0.5px; 
+      }
+
+      .saverating{
+         position: relative;
+        left:0.5%;
+        border: solid 1px rgb(0,0,0); 
+        border-right-width: 0.5px; 
+      } */
 </style>
 
-{% if user_id %}
-<a href="/users/{{user_id}}">User Profile </a>
-{% endif %}
+<div id="templeprofile">
+    <h1>  Temple Profile Page </h1>
+  </div>
 
-<div>
-  <h2>{{temple.t_name}}</h2>
-  <p>{{temple.address}}</p>
-  <p>{{temple.city}}</p>
-  <p>{{temple.state}} {{temple.zipcode}}</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+    {% if user_id %}
+    <a href="/users/{{user_id}}">User Profile </a>
+    {% endif %}
+
+    <div>
+      <h2>{{temple.t_name}}</h2>
+      <p>{{temple.address}}</p>
+      <p>{{temple.city}}</p>
+      <p>{{temple.state}} {{temple.zipcode}}</p>
+    </div>
+
+    <!--a href="http://yelp.com">yelp.com/<a/!--> 
+
+    {% if user_id %}
+
+    <h3> Temple: </h3>
+    <div class="savetemple">
+      <form action="/savetemple" method="POST", id="savetemple">
+        <input type="text" name="templeid" id = "templeid" Value="{{temple.temple_id}}"> 
+    <br>
+        <div>
+        <input type="submit" class="templebutton" id = "btnsubmit" Value="Save Temple">
+        </div>
+      </form>
+    </div>
+
+    <div class="saverating">
+      <form action="/saveratings", method="POST" id="saveratings">
+      <h3> Ratings: </h3>
+        <input type="text" name="templeid" Value="{{temple.temple_id}}" hidden> 
+      <h4> Score: </h4>
+        <select name="score">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      <h4> Comments: </h4>
+         <h3> <textarea name="comments"></textarea> </h3>
+      <div id="ratingbutton">
+        <input type="submit" value="Save Ratings">
+      </div>
+      </form>
+    </div>
+
+    {% else %}
+      <h3> Please longin to see the form </h3>
+
+    {% endif %}
+
+    </div>
+      <div class="col-xs-6">
+      <div id="templemap"> </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo" async defer></script>
+
+    </diV>
+  </div>
 </div>
 
-
-{% if user_id %}
-
-Save Temple:
-  
-  <form action="/savetemple" method="POST", id="savetemple">
-    <input type="text" name="templeid" id = "templeid" Value="{{temple.temple_id}}"> 
-    <input type="submit" id = "btnsubmit" Value="submit">
-  </form>
-
-
-
-<form action="/saveratings", method="POST" id="saveratings">
-  Save Ratings:
-  <div>
-    <input type="text" name="templeid" Value="{{temple.temple_id}}" hidden> 
-  </div>
-    <div>
-    <select name="score">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-  </div>
-  <div>
-      <textarea name="comments"></textarea>
-  </div>
-
-    <input type="submit" value="Save Ratings">
-</form>
-
-{% else %}
-  <h3> Please longin to see the form </h3>
-
-{% endif %}
-
-<div id="templemap"> </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmFXqsKBnKV-7mHml_tn9fRgbrCtUqFLo" async defer></script>
-
-<div id="templemap"></div>
 <script type="text/javascript"> 
 
 
