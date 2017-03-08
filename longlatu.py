@@ -15,7 +15,7 @@ def getlatlong():
 		#address = "683 Sutter Street, San Francisco, CA"
 
 
-		r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyDXi3yJfXgSN2oApiDtrVa7Nc8kiWwz4DQ")
+		r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=)
 		adict = r.json()
 		print adict
 
