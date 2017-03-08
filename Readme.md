@@ -13,6 +13,9 @@ be expanded to all places of worship.
 Technologies Used:
 
 Back-end: Python, Flask
+
 Front-end: JavaScript, JQuery, Jinja, Bootstrap, HTML, CSS
+
 Database: SQLAlchemy, SQL
+
 APIs: Google Geocoding API and Google Map API 
