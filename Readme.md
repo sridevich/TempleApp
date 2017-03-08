@@ -10,7 +10,8 @@ they saved. Users can also see the ratings and comments that they left
 for temples. In a later phase, Temple Quest's search capabilities will 
 be expanded to all places of worship.
 
-Technologies Used
+Technologies Used:
+
 Back-end: Python, Flask
 Front-end: JavaScript, JQuery, Jinja, Bootstrap, HTML, CSS
 Database: SQLAlchemy, SQL
